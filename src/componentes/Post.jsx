@@ -1,32 +1,48 @@
+import { format, formatDistanceToNow } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR'
+
 import { Avatar } from './Avatar';
 import { Comment } from './Comment';
 
 import styles from './Post.module.css';
 
-export function Post() {
+export function Post({author, publishedAt, content}) {
+    const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'ás' HH:mm'h'", {
+        locale: ptBR,
+    })
+
+    const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+        locale: ptBR,
+        addSuffix: true,
+    })
+
     return (
        <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <Avatar src= "https://media.licdn.com/dms/image/C4D03AQERmfk_iV-dgg/profile-displayphoto-shrink_800_800/0/1587567528318?e=1681948800&v=beta&t=_hTJxYXZrY-SawPRhSMuLgYL-3vpgw1-TZBqGevcJtQ"/>
+                    <Avatar src= {author.avatarUrl}/>
                     <div className={styles.authorInfo}>
-                        <strong>Larissa Yasmim</strong>
-                        <span>Web Developer</span>
+                        <strong>{author.name}</strong>
+                        <span>{author.role}</span>
                     </div>
                 </div>
 
-                <time title="13 de Fevereiro ás 15:52h" dateTime="2023-02-13">Publicado há 1h</time>
+                <time title={publishedDateFormatted} dateTime= {publishedAt.toISOString()}>
+                {publishedDateRelativeToNow} 
+                </time>
             </header>
+            
+          
+            
             <div className={styles.content}>
-                <p>Fala galeraa 👋</p>
-                <p>Acabei de subir mais um projeto no meu portfólio. É um projeto que fiz do curso de ReactJS, da plataforma Rocketseat. O nome do projeto é Ignite Feed 🚀</p>
-                <p>👉<a href=""> jane.design/doctorcare //link do projeto</a></p>
-                <p>
-                    <a href=''> &nbsp;#novoprojeto</a>
-                    <a href=''> &nbsp;#react</a> 
-                    <a href=''> &nbsp;#reactjs</a>
-                    <a href=''> &nbsp;#rocketseat</a>
-                </p>
+                {content.map(item => {
+                    if (item.type === 'paragraph') {
+                        return <p>{item.content}</p>;
+                    } else if (item.type === 'link') {
+                        return <p><a href="#">{item.content}</a></p>
+                    }
+                })}
+
            </div>
 
            <form className={styles.commentForm}>

@@ -38,11 +38,19 @@ export function App() {
         <main>
             {posts.map(post => {
               return (
+                <div >
                 <Post 
                     author={post.author}
                     content={post.content}
                     publishedAt={post.publishedAt}
                     />
+
+                    <Post 
+                    author={post.author}
+                    content={post.content}
+                    publishedAt={post.publishedAt}
+                    />
+                    </div>
               )
             }) }
         </main>

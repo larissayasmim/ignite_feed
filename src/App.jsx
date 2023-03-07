@@ -23,6 +23,20 @@ const posts = [
     ],
     publishedAt: new Date('2023-02-17 23:00:00'),
   },
+  {
+    id: 2,
+    author: {
+      avatarUrl:'https://media.licdn.com/dms/image/C5603AQENRsJI0Q-Luw/profile-displayphoto-shrink_400_400/0/1611344151842?e=1683763200&v=beta&t=-ikl5rXRiWBLRTeO2OeadcMGO_CahJy7J7Jc0td7uB8',
+      name:'Danyelle L.',
+      role:'Designer'
+    },
+    content:[
+      {type: 'paragraph', content: 'Fala galeraa 👋',},
+      {type: 'paragraph', content: 'Acabei de subir mais um projeto no meu portfólio. É um projeto que fiz do curso de ReactJS, da plataforma Rocketseat. O nome do projeto é Ignite Feed 🚀',},
+      {type: 'link', content: 'jane.design/doctorcare //link do projeto'},
+    ],
+    publishedAt: new Date('2023-02-17 23:00:00'),
+  },
 ];
 
 
@@ -38,19 +52,13 @@ export function App() {
         <main>
             {posts.map(post => {
               return (
-                <div >
-                <Post 
+                
+                <Post
+                    key={post.id} 
                     author={post.author}
                     content={post.content}
                     publishedAt={post.publishedAt}
-                    />
-
-                    <Post 
-                    author={post.author}
-                    content={post.content}
-                    publishedAt={post.publishedAt}
-                    />
-                    </div>
+                />
               )
             }) }
         </main>
